@@ -1,0 +1,72 @@
+{%extends 'base.html'%}
+
+
+{% block body %}
+
+
+<div class='container-fluid' style="padding-top:3em;">
+
+<div class = 'row'>
+  <div class="col-xs-10 col-sm-6 col-md-6 col-lg-6" >
+    
+  
+		<ul>
+			{% for confession in object_list %}
+      
+				<div>
+					<h3><a class='post'href="" data-toggle="modal" data-target="#myModal" data-catid='{{confession.id}}'>{{confession.title|truncatechars:20}}</a></h3>
+					<div class='thumbnail spaces' style="border-radius:1em;" >
+         
+					     <h4 style='padding-bottom:3em;'>{{confession.text|truncatechars:500}}</h4>
+            
+					{% if confession.image %}
+
+						<!--<img src="{{MEDIA_URL}}{{confession.image}}" alt="{{confession.text}}" height='200' width='200'> -->
+					{% endif %}
+          <div>
+            <hr>
+            <button  id = 'button{{confession.id}}'data-catid='{{confession.id}}' class="btn btn-primary likes" type="button">Like</button>
+            <span id = '{{confession.id}}'class ='badge count' >{{confession.total_likes}}</span>
+            <small class='' style ='padding-left:0em;'><i class ='glyphicon glyphicon-time'></i>&nbsp{{confession.posted|timesince}}&nbsp ago</small>
+          </div>
+					</div>
+
+
+
+					<!--<div id="like_count"></div>-->
+					<!-- Modal -->
+
+				</div>
+
+      
+				
+			{%empty%}
+				<h2>No confession till' now, come back later</h2>
+			{% endfor %}
+		</ul>
+    </div>
+  </div>	
+	
+</div>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel"></h4>
+      </div>
+      <div class="modal-body">
+                
+      </div>
+      <div class="modal-footer">
+        <button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>
+        
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal-end -->
+
+
+{% endblock %}
+

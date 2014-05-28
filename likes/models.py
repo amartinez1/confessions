@@ -1,0 +1,25 @@
+from django.db import models
+from confess.models import  Post
+
+
+# Create your models here.
+
+VOTE_CHOICES=(
+	(+1,'+1'),
+	(-1,'-1'),
+	(0,'0'),
+
+)
+
+class Like (models.Model):
+	post = models.ForeignKey(Post)
+	user_token = models.CharField(max_length=100)
+	vote = models.SmallIntegerField(choices=VOTE_CHOICES)
+	date = models.DateTimeField(auto_now_add=True)
+	liked = models.BooleanField(default=False)
+
+
+	class Meta:
+		unique_together = (('user_token', 'post'),)
+	def __unicode__(self):
+		return unicode(self.post)
