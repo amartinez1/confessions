@@ -5,7 +5,7 @@ from .models import Post
 
 class PostAdmin(admin.ModelAdmin):
 	date_hierarchy = "posted"
-	fields = ("title", "text","image",'slug','total_likes')
+	fields = ("title", "text","image",'slug','total_likes','category')
 	list_display = ["title", "posted","total_likes"]
 	list_display_links = ["title"]
 	list_filter = ["title"]

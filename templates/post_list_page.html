@@ -1,14 +1,16 @@
-{%extends 'base.html'%}
+{%extends 'confess.html'%}
 
 
 {% block body %}
 
 
-<div class='container-fluid' style="padding-top:3em;" >
+<div class='container-fluid' >
 
 <div class = 'row'>
-  <div class="col-xs-10 col-sm-6 col-md-6 col-lg-6" >
     
+  {% load endless %}
+
+  {% paginate category %}
   
 		<ul>
 			{% for confession in object_list %}
@@ -18,7 +20,7 @@
           
 					<div class=' thumbnail spaces' style="border-radius:1em;" >
          
-					     <h4 class='justified' style='padding-bottom:3em;'><a href="{%url 'detail' confession.slug %}"> "{{confession.text|truncatechars:500}}"</a></h4>
+					     <h4 class='justified' style='padding-bottom:3em;'><a href="{%url 'detail' confession.slug %}"> {{confession.text|truncatechars:500}}</a></h4>
          
             
 					{% if confession.image %}
@@ -74,6 +76,7 @@
 			{%empty%}
 				<h2>No confession till' now, come back later</h2>
 			{% endfor %}
+      {% show_more %}
 		</ul>
     </div>
   </div>	
@@ -100,4 +103,3 @@
 
 
 {% endblock %}
-

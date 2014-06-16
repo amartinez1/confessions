@@ -1,24 +1,25 @@
-{%extends 'base.html'%}
 
 
-{% block body %}
+{% block content%}
 
 
-<div class='container-fluid' style="padding-top:3em;" >
+
 
 <div class = 'row'>
-  <div class="col-xs-10 col-sm-6 col-md-6 col-lg-6" >
     
+  {% load endless %}
+
+  {% paginate 8 objects %}
   
 		<ul>
-			{% for confession in object_list %}
+			{% for confession in objects %}
       
 				<div id = 'Post'>
 					<h3><a class='post'href="" data-toggle="modal" data-target="#myModal" data-catid='{{confession.id}}'>{{confession.title|truncatechars:20}}</a></h3>
           
 					<div class=' thumbnail spaces' style="border-radius:1em;" >
          
-					     <h4 class='justified' style='padding-bottom:3em;'><a href="{%url 'detail' confession.slug %}"> "{{confession.text|truncatechars:500}}"</a></h4>
+					     <h4 class='justified' style='padding-bottom:3em;'>{{confession.text|truncatechars:500}}</h4>
          
             
 					{% if confession.image %}
@@ -73,7 +74,14 @@
 				
 			{%empty%}
 				<h2>No confession till' now, come back later</h2>
+
 			{% endfor %}
+      {% show_more %}
+      {% get_pages %}
+
+{# the previous page (or nothing if you are on first page) #}
+<h4>{{ pages.previous  }}</h4>
+      
 		</ul>
     </div>
   </div>	
@@ -100,4 +108,3 @@
 
 
 {% endblock %}
-

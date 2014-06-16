@@ -61,7 +61,7 @@ a.show-sidebar:hover {
 #sidebar-left {
   position:relative;
   z-index: inherit;
-  padding-bottom: 3000px !important;
+ padding-bottom: 3000px !important;
   margin-bottom: -3000px !important;
 
 background: #2073a0; /* Old browsers */

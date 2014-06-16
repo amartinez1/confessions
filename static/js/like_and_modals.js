@@ -1,5 +1,5 @@
 
-	   $(document).ready
+	$(document).ready
     (function()
       {
 
@@ -31,9 +31,11 @@
         url: '/fill/',
         type:'get',
         success: function(data){
-         $('.modal-title').html(data.fields.title+ " &nbsp <small id = "+data.fields.pk+"class ='badge count ' >"+data.fields.total_likes+" likes</small>");
-         $('.modal-body').html('<h4>'+data.fields.text+"<h4>");
-         $('.modal-footer').html("<button  id = 'button'"+data.fields.pk+"data-catid="+data.fields.pk+" class='btn btn-primary likes pull-left' type='button'>Like</button>"+
+          console.log("confirming id "+ data.pk);
+         $('.modal-title').html(data.fields.title+ " &nbsp <small id = "+data.pk+"class ='badge count ' >"+data.fields.total_likes+" likes</small>");
+         $('.modal-body').html("<h4 class='justified'>"+data.fields.text+"<h4>");
+         $('.modal-footer').html(
+          // "<button  id = 'button'"+data.pk+"&nbsp data-catid="+data.pk+" class='btn btn-primary likes pull-left' type='button'>Like</button>"+
           
 
           "<button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>"

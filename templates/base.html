@@ -32,25 +32,30 @@
  
     
     {{form.media}}
-        <script type="text/javascript"> 
-// //![CDATA[  SHAREHOLIC
-  (function() {
-    var shr = document.createElement('script');
-    shr.setAttribute('data-cfasync', 'false');
-    shr.src = '//dsms0mj1bbhn4.cloudfront.net/assets/pub/shareaholic.js';
-    shr.type = 'text/javascript'; shr.async = 'true';
-    shr.onload = shr.onreadystatechange = function() {
-      var rs = this.readyState;
-      if (rs && rs != 'complete' && rs != 'loaded') return;
-      var site_id = '581d44877efbaecbb2ebb034613d9f23';
-      try { Shareaholic.init(site_id); } catch (e) {}
-    };
-    var s = document.getElementsByTagName('script')[0];
-    s.parentNode.insertBefore(shr, s);
-  })();
-//]]SHAREHOLIC
+<script type="text/javascript">
+//<![CDATA[
+  // (function() {
+  //   var shr = document.createElement('script');
+  //   shr.setAttribute('data-cfasync', 'false');
+  //   shr.src = '//dsms0mj1bbhn4.cloudfront.net/assets/pub/shareaholic.js';
+  //   shr.type = 'text/javascript'; shr.async = 'true';
+  //   shr.onload = shr.onreadystatechange = function() {
+  //     var rs = this.readyState;
+  //     if (rs && rs != 'complete' && rs != 'loaded') return;
+  //     var site_id = 'e270e9920247f42fab9b4d2b9fe92733';
+  //     try { Shareaholic.init(site_id); } catch (e) {}
+  //   };
+  //   var s = document.getElementsByTagName('script')[0];
+  //   s.parentNode.insertBefore(shr, s);
+  // })();
+//]]>
 
-  </script>
+</script>
+<script type="text/javascript">var switchTo5x=true;</script>
+<script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
+
+
+
 
    
     {% block js %}
@@ -80,10 +85,15 @@
             <a href="#" class="show-sidebar">
               <i class="glyphicon glyphicon-align-justify"></i>
             </a>
-            <div id="search">
-              <input type="text" placeholder="search"/>
+            <div id="sections" class = "col-xs-8 col-sm-4 side-text">
+              <!--<input type="text" placeholder="search"/>-->
+              <a href="{%url 'popular'%}">Popular</a>
               <i class="fa fa-search"></i>
             </div>
+              <!--<input type="text" placeholder="search"/>-->
+              <a href="{% url 'new'%}">New</a>
+              <i class="fa fa-search"></i>
+            
           </div>
           <div class="col-xs-4 col-sm-8 top-panel-right">
             <ul class="nav navbar-nav pull-right panel-menu">

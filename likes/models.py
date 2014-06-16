@@ -17,6 +17,7 @@ class Like (models.Model):
 	vote = models.SmallIntegerField(choices=VOTE_CHOICES)
 	date = models.DateTimeField(auto_now_add=True)
 	liked = models.BooleanField(default=False)
+	label = models.CharField(max_length=30)
 
 
 	class Meta:

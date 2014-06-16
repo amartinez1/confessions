@@ -36,6 +36,7 @@ class like(TemplateView):
 				if user_like.liked==False:
 					user_like.vote=vote
 					user_like.liked=True
+					user_like.label = label
 					user_like.save()
 					print "user like saved!!!"
 					count =like_count(request,posts)
@@ -54,6 +55,8 @@ class like(TemplateView):
 					
 					print "sent to unlike method"
 					label  = 'Like'
+					user_like.label = label
+					user_like.save()
 					count=unlike(request,posts,user_token)
 					data = {
 							'count':count,
@@ -64,6 +67,7 @@ class like(TemplateView):
 		else:
 			print "create it!!"
 			post=Like(post=Post.objects.get(id=post_id),user_token=user_token,vote=vote, liked=True)
+			post.label = label
 			post.save()
 			print post.post, post.user_token,post.vote, post.id
 			post_id = post.id
@@ -84,14 +88,17 @@ def unlike(request,posts,user_token):
 	post_obj = Post.objects.get(id=posts.id)
 	post=Like.objects.get(post=post_obj,user_token=user_token)
 	post.vote =down_vote
+	post_obj.total_likes = post_obj.total_likes+down_vote
+	total_likes = like_count(request,post_obj)
+	post_obj.save()
 	post.liked=False
 	post.save()
-	print " post id: ",post.id,"  for",post.post.title,"downvoted!!!"
-	count =like_count(request,post_obj)
+	print "downvoted!!!"
+	count = like_count(request,post_obj)
+	
 
 	return count
 	
-
 
 def like_count(request,post): #,post
 
@@ -102,11 +109,14 @@ def like_count(request,post): #,post
 		likes =like.aggregate(Sum('vote'))['vote__sum'] or 0
 		# right way ------>		post.total_likes=likes
 		# sum and add it to the current likes (not so good)
+
 	
 		
 		post.total_likes=likes
 		post.save()
-		return likes
+		# likes = post.total_likes
+
+		return likes 
 	else:
 		post.total_likes=likes
 		post.save()
@@ -129,4 +139,15 @@ class fill_modal(TemplateView):
 		# print data
 		return HttpResponse(data,content_type='application/json')
 	
+class user_like(TemplateView):
+	def get(self,request,*args,**kwargs):
 
+		token = retrieve_token(request)
+		
+		post_id = request.GET['id']
+
+		like_obj = Like.objects.get(post=post_id,user_token=token)
+		
+		data = {'label':like_obj.label}
+		result = json.dumps(data)
+		return HttpResponse(result,content_type='aplication/json')

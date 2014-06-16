@@ -18,7 +18,7 @@ TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]
 
 MEDIA_ROOT=os.path.join(TOP_FOLDER,'media')
 MEDIA_URL=  '/media/'
-
+DEBUG_TOOLBAR_PATCH_SETTINGS = False
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
 
@@ -30,7 +30,7 @@ DEBUG = True
 
 TEMPLATE_DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*'] #For heroku pusposes
 
 
 # Application definition
@@ -46,6 +46,7 @@ INSTALLED_APPS = (
     'confess',
     'likes',
     'django_forms_bootstrap',
+    'endless_pagination',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -66,12 +67,15 @@ WSGI_APPLICATION = 'confesionsapp.wsgi.application'
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'confess_db',
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    #     'NAME': 'confess_db',
 
-    }
+    # } 
 }
+
+import dj_database_url
+DATABASES['default'] = dj_database_url.config()
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
@@ -92,3 +96,12 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = "static",
+
+
+from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS
+
+TEMPLATE_CONTEXT_PROCESSORS += (
+    'django.core.context_processors.request',
+)
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
